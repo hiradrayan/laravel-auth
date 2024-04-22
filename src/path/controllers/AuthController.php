@@ -33,4 +33,13 @@ class AuthController extends Controller
 
         return redirect()->route('admin.home');
     }
+
+    public function logout()
+    {
+        if(Auth::user())
+        {
+            Auth::logout();
+        }
+        return redirect()->route('auth.admin.login')->with('alert.success', 'شما با موفقیت خارج شدید.');
+    }
 }
