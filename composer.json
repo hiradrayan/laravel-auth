@@ -1,6 +1,6 @@
 {
-    "name": "reyhane1376/authentication",
-    "description": ":description",
+    "name": "laravel-auth",
+    "description": "package for authentication laravel",
     "license": "MIT",
     "authors": [
         {
@@ -9,7 +9,7 @@
             "homepage": "https://github.com/reyhane1376"
         }
     ],
-    "homepage": "https://github.com/reyhane1376/authentication",
+    "homepage": "https://github.com/reyhane1376/laravel-auth",
     "keywords": ["Laravel", "authentication"],
     "require": {
         "illuminate/support": "^8.0|^9.0|^10.0",
