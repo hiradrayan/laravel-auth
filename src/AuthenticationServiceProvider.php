@@ -21,7 +21,7 @@ class AuthenticationServiceProvider extends ServiceProvider
         //     __DIR__.'/path/views' => resource_path('views/vendor/courier'),
         // ]);
 
-        $this->loadMigrationsFrom(__DIR__ . '/path/databases');
+        $this->publishesMigrations([__DIR__ . '/path/databases' => database_path('migrations')]);
     }
 
     /**
