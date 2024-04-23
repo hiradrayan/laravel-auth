@@ -14,14 +14,14 @@ class AuthenticationServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        $this->loadRoutesFrom(__DIR__.'/path/routes/routes.php');
-        $this->loadViewsFrom(__DIR__.'/path/views', 'auth');
+        // $this->loadRoutesFrom(__DIR__.'/path/routes/routes.php');
+        // $this->loadViewsFrom(__DIR__.'/path/views', 'auth');
 
         // $this->publishes([
         //     __DIR__.'/path/views' => resource_path('views/vendor/courier'),
         // ]);
 
-        $this->loadMigrationsFrom(__DIR__ . '/database');
+        // $this->loadMigrationsFrom(__DIR__ . '/database');
     }
 
     /**
@@ -34,8 +34,8 @@ class AuthenticationServiceProvider extends ServiceProvider
         // $this->mergeConfigFrom(__DIR__.'/../config/authentication.php', 'authentication');
 
         // Register the service the package provides.
-        $this->app->singleton('authentication', function ($app) {
-            return new Authentication;
-        });
+        // $this->app->singleton('authentication', function ($app) {
+        //     return new Authentication;
+        // });
     }
 }
