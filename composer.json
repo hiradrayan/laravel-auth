@@ -16,22 +16,6 @@
     },
     "require-dev": {
     },
-    "minimum-stability": "stable",
-    "autoload": {
-        "psr-4": {
-            "reyhane1376\\Authentication\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "reyhane1376\\Authentication\\Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "reyhane1376\\Authentication\\AuthenticationServiceProvider"
-            ]
-        }
-    }
+    "minimum-stability": "stable"
+
 }
