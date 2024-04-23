@@ -1,10 +1,15 @@
 {
     "name": "reyhane1376/laravel-auth",
+    "description": ":description",
+    "license": "MIT",
     "authors": [
         {
-            "name": "reyhane",
-            "email": "97376622+reyhane1376@users.noreply.github.com"
+            "name": "amin3536",
+            "email": "am.a9173@gmail.com",
+            "homepage": "https://github.com/amin3536"
         }
     ],
+    "homepage": "https://github.com/amin3520/anar",
+    "keywords": ["Laravel", "Anar","repository"],
     "require": {}
 }
