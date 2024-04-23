@@ -22,18 +22,18 @@
     },
     "autoload": {
         "psr-4": {
-            "reyhane1376\\Authentication\\": "src/"
+            "Authentication\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "reyhane1376\\Authentication\\Tests\\": "tests/"
+            "Authentication\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "reyhane1376\\Authentication\\AuthenticationServiceProvider"
+                "Authentication\\AuthenticationServiceProvider"
             ]
         }
     }
