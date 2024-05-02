@@ -22,6 +22,8 @@ class AuthenticationServiceProvider extends ServiceProvider
         // ]);
 
         $this->publishesMigrations([__DIR__ . '/path/databases' => database_path('migrations')], 'laravel-auth-migration');
+
+        $this->publishes([__DIR__.'/../path/views/login' => resource_path('views/auth'), 'login-form']);
     }
 
     /**
