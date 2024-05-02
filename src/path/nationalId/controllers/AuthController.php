@@ -1,10 +1,10 @@
 <?php
 
-namespace Authentication\path\controllers;
+namespace Authentication\path\nationalId\controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Authentication\path\requests\LoginRequest;
+use Authentication\path\nationalId\requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 

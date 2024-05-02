@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Authentication\path\controllers\AuthController;
+use Authentication\path\nationalId\controllers\AuthController;
 
 Route::middleware('web')->namespace('Auth')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('auth.admin.login');

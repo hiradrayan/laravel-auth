@@ -1,8 +1,8 @@
 <?php
 
-namespace Authentication\path\requests;
+namespace Authentication\path\nationalId\requests;
 
-use Authentication\path\rules\NationalCode;
+use Authentication\path\nationalId\rules\NationalCode;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest

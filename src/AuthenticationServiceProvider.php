@@ -6,34 +6,28 @@ use Illuminate\Support\ServiceProvider;
 
 class AuthenticationServiceProvider extends ServiceProvider
 {
-        /**
-     * Perform post-registration booting of services.
-     *
-     * @return void
-     */
     public function boot()
     {
 
         $this->loadRoutesFrom(__DIR__.'/path/routes/routes.php');
-        $this->loadViewsFrom(__DIR__.'/path/views', 'auth');
 
-        // $this->publishes([
-        //     __DIR__.'/path/views' => resource_path('views/vendor/courier'),
-        // ]);
-
-        $this->publishesMigrations([__DIR__ . '/path/databases' => database_path('migrations')], 'laravel-auth-migration');
-
-        $this->publishes([__DIR__.'/../path/views/login' => resource_path('views/auth'), 'login-form']);
+        $this->publishes([
+            __DIR__.'/../config/authentication.php' => config_path('authentication.php'),
+        ]);
     }
 
-    /**
-     * Register any package services.
-     *
-     * @return void
-     */
     public function register()
     {
-        // $this->mergeConfigFrom(__DIR__.'/../config/authentication.php', 'authentication');
+        $this->mergeConfigFrom(__DIR__.'/../config/authentication.php', 'authentication');
+
+        if (config('authentication.authentication') == 'national_id')
+        {
+            $this->publishesMigrations([__DIR__ . '/path/natinalId/databases' => database_path('migrations')], 'migration');
+            $this->loadViewsFrom(__DIR__.'/path/nationalId/views', 'auth');
+            $this->publishes([__DIR__.'/../path/nationalId/views/login' => resource_path('views/auth'), 'login-form']);
+
+        }
+        
 
         // Register the service the package provides.
         $this->app->singleton('authentication', function ($app) {
