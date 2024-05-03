@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Authentication\path\nationalId\controllers\AuthController;
+use Authentication\path\controllers\AuthController;
+
+// ->middleware('throttle:3,10')
 
 Route::middleware('web')->namespace('Auth')->group(function () {
-    Route::get('login', [AuthController::class, 'login'])->name('auth.admin.login');
-    Route::post('login', [AuthController::class, 'loginPost'])
-    // ->middleware('throttle:3,10')
-    ->name('auth.admin.login.post');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.admin.logout');
+    Route::get('register', [AuthController::class, 'register'])->name('auth.register');
+    Route::post('register', [AuthController::class, 'postRegister'])->name('auth.register');
+    Route::get('login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('login', [AuthController::class, 'postLogin'])->name('auth.login');
+    Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

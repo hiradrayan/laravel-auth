@@ -1,6 +1,6 @@
 <?php
 
-namespace Authentication\path\nationalId\rules;
+namespace Authentication\path\rules;
 
 use Illuminate\Contracts\Validation\Rule;
 

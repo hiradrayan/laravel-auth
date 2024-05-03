@@ -1,5 +1,10 @@
 <?php
 
 return [
-    'authentication' => 'national_id',
+    'database' => [
+        'required' => [
+            'national_id' => true,
+            'email'       => false
+        ]
+    ]
 ];

@@ -1,15 +1,25 @@
 <?php
 
-namespace Authentication\path\nationalId\controllers;
+namespace Authentication\path\controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Authentication\path\nationalId\requests\LoginRequest;
+use Authentication\path\requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
 {
+    public function register()
+    {
+        return view('auth::register');
+    }
+
+    public function registerPost(Request $request)
+    {
+        dd($request);
+    }
     public function login()
     {
         return view('auth::login');
