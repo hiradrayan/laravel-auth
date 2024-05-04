@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Authentication\path\seeders;
 
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
