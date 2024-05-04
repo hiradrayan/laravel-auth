@@ -16,7 +16,7 @@ return new class extends Migration
         $registerFields = config('authentication.database.registerFields');
         if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields)) {
             Schema::table('users', function (Blueprint $table) {
-                $table->foreignId('province_id')->nullable()->after('hash')->constrained('province_cities');
+                $table->foreignId('province_id')->nullable()->before('updated_at')->constrained('province_cities');
                 $table->foreignId('city_id')->nullable()->after('province_id')->constrained('province_cities');
             });
         }
