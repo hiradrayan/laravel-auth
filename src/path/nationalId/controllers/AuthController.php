@@ -703,5 +703,30 @@ class AuthController extends Controller
         return redirect()->route('home')->with('alert.success',$user->first_name . ' عزیز، خوش آمدید');
     }
 
+    public function resendOtp (Request $request)
+    {
+        $mobile = $request->mobile;
+        if (!$mobile) {
+            return response()->json([
+                'message' => 'شماره تلفن همراه یافت نشد. لطفا صفحه را رفرش کنید',
+                'code' => -1,
+                'data' => []
+            ],400);
+        }
 
+        $otpResult = $this->sendOtp($mobile);
+
+        if ($otpResult['code'] < 1) {
+            return  response()->json([
+                'message' => $otpResult['message'],
+                'code' => -2,
+                'data' => []
+            ],400);
+        }
+        return response()->json([
+            'message' => 'با موفقیت ارسال شد',
+            'code' => -1,
+            'data' => []
+        ]);
+    }
 }

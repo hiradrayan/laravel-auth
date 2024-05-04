@@ -7,7 +7,7 @@ use Authentication\path\nationalId\controllers\AuthController;
 
 if (config('authentication.authentication') == 'national_id') {
     Route::middleware('web')->namespace('Auth')->group(function () {
-        
+
         Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
         Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
@@ -52,6 +52,19 @@ if (config('authentication.authentication') == 'national_id') {
                 Route::post('/password',[ForgetPasswordController::class, 'postPassword']);
         
             });
+        });
+    });
+
+    Route::group([
+        'prefix'=>'api',
+        'as' => 'api.',
+    ],function () {
+    
+        Route::group([
+            'prefix'=>'auth',
+            'as' => 'auth.',
+        ],function () {
+            Route::post('/otp-resend', [AuthAuthController::class,'resendOtp'])->name('otp.resend');
         });
     });
 }
