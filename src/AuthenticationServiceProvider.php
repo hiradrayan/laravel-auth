@@ -22,7 +22,7 @@ class AuthenticationServiceProvider extends ServiceProvider
             __DIR__.'/path/assets'                  => public_path('/assets'),
             __DIR__.'/path/nationalId/views'        => resource_path('views'),
             __DIR__.'/../config/authentication.php' => config_path('authentication.php'),
-            __DIR__.'/path/OtpSender.php'           => app_path('Http/Services/Sms'),
+            __DIR__.'/path/OtpSender.php'           => app_path('Http/Services/Sms/OtpSender.php'),
             
         ], 'publisher-national-id');
     }

@@ -13,7 +13,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('national_id',10)->unique();
             if (Schema::hasColumn('users', 'national_id')) {
                 Schema::table('users', function (Blueprint $table) {
                     $table->dropUnique('users_national_id_unique');
