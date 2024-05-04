@@ -13,6 +13,8 @@ return [
                 'gender'
             ]
         ]
+    ],
 
-    ]
+    'otp_sender' => App\Http\Services\Notification\SmsService::class,
+
 ];

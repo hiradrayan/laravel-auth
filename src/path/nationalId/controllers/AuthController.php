@@ -4,6 +4,8 @@ namespace Authentication\path\nationalId\controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Authentication\Interface\OtpSenderInterface;
+use Authentication\path\models\SecurityLog;
 use Authentication\path\requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,9 +15,16 @@ use Illuminate\Support\Facades\Session;
 use Authentication\path\Service\StringFunctions;
 use Authentication\path\nationalId\Requests\Auth\MobileRequest;
 use Authentication\path\nationalId\Requests\Auth\OtpRequest;
+use Authentication\path\Service\UserAgentService;
+use Authentication\path\nationalId\Requests\Auth\UserInfoRequest;
 
 class AuthController extends Controller
 {
+    private $optSender;
+    public function __construct(OtpSenderInterface $optSender)
+    {
+        $this->optSender = $optSender;
+    }
 
     public function login (Request $request) {
 
@@ -66,15 +75,15 @@ class AuthController extends Controller
 
         $user = User::where('national_id', '=', $national_id)->first();
 
-        // $isLocked = SecurityLog::query()
-        //     ->where('data',$national_id)
-        //     ->where('created_at','>=',$tenMinAgo)
-        //     ->where('is_locked',true)
-        //     ->count('id');
+        $isLocked = SecurityLog::query()
+            ->where('data',$national_id)
+            ->where('created_at','>=',$tenMinAgo)
+            ->where('is_locked',true)
+            ->count('id');
 
-        // if ($isLocked) {
-        //     return redirect()->route('auth.national_id')->with('alert.warning','حساب شما برای مدت کوتاهی قفل شده. لطفا چند دقیقه دیگر امتحان کنید.');
-        // }
+        if ($isLocked) {
+            return redirect()->route('auth.national_id')->with('alert.warning','حساب شما برای مدت کوتاهی قفل شده. لطفا چند دقیقه دیگر امتحان کنید.');
+        }
 
         if ($user) {
             return  redirect()->route('auth.password');
@@ -108,18 +117,6 @@ class AuthController extends Controller
         $secret = env('RECAPTCHAV3_SECRET');
         $stringFunctions = new StringFunctions();
 
-        /*$recaptchaResponse = $request->request->get('g-recaptcha-response');
-        $recaptcha = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret}&response=$recaptchaResponse");
-        if ($recaptcha) {
-            $recaptcha = json_decode($recaptcha);
-            if ($recaptcha && $recaptcha->success) {
-                $recaptchaVerified = true;
-            }
-        }
-        if (!$recaptchaVerified) {
-            return redirect()->route('auth.password')->with('alert.warning','کد امنیتی recaptcha نامعتبر است.');
-        }*/
-
         $tenMinAgo = new \DateTime('UTC');
         $tenMinAgo->sub(new \DateInterval('PT10M'));
 
@@ -129,15 +126,15 @@ class AuthController extends Controller
             return redirect()->route('auth.national_id')->with('alert.warning','لطفا کد ملی خود را وارد فرمایید');
         }
 
-        // $isLocked = SecurityLog::query()
-        //     ->where('data',$national_id)
-        //     ->where('created_at','>=',$tenMinAgo)
-        //     ->where('is_locked',true)
-        //     ->count('id');
+        $isLocked = SecurityLog::query()
+            ->where('data',$national_id)
+            ->where('created_at','>=',$tenMinAgo)
+            ->where('is_locked',true)
+            ->count('id');
 
-        // if ($isLocked) {
-        //     return redirect()->route('auth.national_id')->with('alert.warning','حساب شما برای مدت کوتاهی قفل شده. لطفا چند دقیقه دیگر امتحان کنید.');
-        // }
+        if ($isLocked) {
+            return redirect()->route('auth.national_id')->with('alert.warning','حساب شما برای مدت کوتاهی قفل شده. لطفا چند دقیقه دیگر امتحان کنید.');
+        }
 
 
         $user = User::where('national_id', '=', $national_id)->first();
@@ -148,18 +145,18 @@ class AuthController extends Controller
         $password = $request->password;
         if (! \Hash::check($password, $user->password)) {
 
-            // $wrongPassCount = SecurityLog::query()
-            //     ->where('data',$national_id)
-            //     ->where('created_at','>=',$tenMinAgo)
-            //     ->count('id');
+            $wrongPassCount = SecurityLog::query()
+                ->where('data',$national_id)
+                ->where('created_at','>=',$tenMinAgo)
+                ->count('id');
 
-            // SecurityLog::create([
-            //     'type'      => 'WRONG_PASSWORD',
-            //     'data'      => $national_id,
-            //     'user_id'   => $user->id,
-            //     'ip'        => $stringFunctions->getRealIPAddr(request()),
-            //     'is_locked' => $wrongPassCount >= 4,
-            // ]);
+            SecurityLog::create([
+                'type'      => 'WRONG_PASSWORD',
+                'data'      => $national_id,
+                'user_id'   => $user->id,
+                'ip'        => $stringFunctions->getRealIPAddr(request()),
+                'is_locked' => $wrongPassCount >= 4,
+            ]);
             return  back()->withErrors([
                 'password' => 'کلمه عبور وارد شده صحیح نیست'
             ]);
@@ -258,37 +255,22 @@ class AuthController extends Controller
 
         if ($otp != $correctOtp) {
 
-            // SecurityLog::create([
-            //     'type'       => 'WRONG_OTP',
-            //     'data'       => $national_id,
-            //     'user_id'    => $user ? $user->id : null,
-            //     'ip'         => $stringFunctions->getRealIPAddr(request()),
-            //     'description'=> $mobile,
-            //     'parameters' => [
-            //         'mobile'      => $mobile,
-            //         'national_id' => $national_id,
-            //     ]
-            // ]);
+            SecurityLog::create([
+                'type'       => 'WRONG_OTP',
+                'data'       => $national_id,
+                'user_id'    => $user ? $user->id : null,
+                'ip'         => $stringFunctions->getRealIPAddr(request()),
+                'description'=> $mobile,
+                'parameters' => [
+                    'mobile'      => $mobile,
+                    'national_id' => $national_id,
+                ]
+            ]);
 
             return back()->withErrors(['otp'=>'کد تایید وارد شده صحیح نیست']);
         }
 
         \Session::put('is_verified',true);
-        // $isLoginAsTeacher  = Session::get('login_as_teacher');
-        // if ($isLoginAsTeacher) {
-        //     $user = User::create([
-        //         'national_id' => $national_id,
-        //         'mobile' => $mobile,
-        //         'roles' => ['ROLE_USER'],
-        //         'mobile_verified_at' => new \DateTime('UTC'),
-        //         'hash' => $this->makeUniqueUserHash(),
-        //         'password' => \Hash::make(rand(100000, 999999))
-        //     ]);
-
-        //     PartnerHost::createPartnerUser($user->id, $request->getHost());
-
-        //     $this->loginUser($user);
-        // }
 
         return $this->findRedirectUrl($user);
     }
@@ -379,8 +361,6 @@ class AuthController extends Controller
         ]);
 
         $user->save();
-
-//        UserMetaService::update($user->id,'EXTRA_MOBILE', $extraMobile);
 
         $this->loginUser($user);
         return  $this->findRedirectUrl($user);
@@ -628,10 +608,7 @@ class AuthController extends Controller
         \Session::put('otp', $otp);
 
         if (env('APP_ENV') != 'local') {
-            $smsService = new SmsService();
-            $smsService->send($mobile,[
-                'token' => $otp,
-            ],SmsService::VERIFY_OTP);
+            $this->optSender->sendOtp($mobile,['token' => $otp]);
         }
 
         SecurityLog::create([
