@@ -1,0 +1,70 @@
+@media screen and (max-width: 767.98px) {
+    .teachers.b-left .box {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+
+    .teachers .image {
+        margin: 0 auto;
+    }
+
+    .comment .box {
+        margin-top: 15px;
+        width: 100%;
+    }
+
+    .res-li {
+        flex-direction: column;
+    }
+
+    .res-non {
+        display: none !important;
+    }
+
+    .v-box .video-view {
+        right: 0;
+        margin: 0 auto;
+        height: 400px;
+    }
+
+    .res-block {
+        display: block;
+    }
+
+    .left-side {
+        margin-top: 0 !important;
+        padding-top: 25px !important;
+    }
+
+    .teachers .box {
+        margin: -30px auto 30px!important;
+    }
+
+    .teachers.b-left .box {
+        margin: -30px auto 30px!important;
+    }
+    .comment .box, .avatar .box {
+        padding: 15px;
+    }
+
+    .conversation-box .main-items {
+        height: 300px;
+    }
+
+    .course .item .items {
+        margin: 0 0;!important;
+    }
+
+    .video-view .video-content button {
+        width: 40px;!important;
+        height: 40px;!important;
+        left: -20px;
+        margin-top: -20px;
+        background-size: auto 100%;
+    }
+
+    .sidebar-section {
+        display: none;
+    }
+
+}

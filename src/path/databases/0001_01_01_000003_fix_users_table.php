@@ -13,6 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('national_id',10)->unique();
             if (Schema::hasColumn('users', 'national_id')) {
                 Schema::table('users', function (Blueprint $table) {
                     $table->dropUnique('users_national_id_unique');
@@ -30,25 +31,19 @@ return new class extends Migration
                     $table->dropColumn('email');
                 });
             }
-            if (config('authentication.database.required.national_id'))
+            if (config('authentication.authentication') == 'national_id')
             {
                 $table->string('national_id', 10)->unique()->after('id');
-            } else {
-                $table->string('national_id', 10)->unique()->after('id')->nullable();
+                $table->string('mobile',11)->after('national_id');
+                $table->timestamp('mobile_verified_at')->nullable()->after('mobile');
             }
-            $table->string('mobile',11)->unique()->after('national_id');
-
-            if (config('authentication.database.required.email'))
+            
+            foreach (config('authentication.database.national_id.registerFields') as $key => $value)
             {
-                $table->string('email')->unique()->after('mobile');
-            } else {
-                $table->string('email')->unique()->after('mobile')->nullable();
+                $table->string($value)->nullable()->after('mobile');
             }
 
-            $table->string('address')->nullable()->after('mobile');
-            $table->string('gender',1)->nullable()->after('mobile');
-            $table->string('last_name')->nullable()->after('mobile');
-            $table->string('first_name')->nullable()->after('mobile');
+
         });
 
     }

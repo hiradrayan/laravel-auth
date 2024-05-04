@@ -12,12 +12,16 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/path/routes/routes.php');
 
         $this->publishesMigrations([__DIR__ . '/path/databases' => database_path('migrations')], 'migration');
-        $this->loadViewsFrom(__DIR__.'/path/views', 'auth');
-        $this->publishes([__DIR__.'/../path/views/login' => resource_path('views/auth'), 'login-form']);
+        $this->loadViewsFrom(__DIR__.'/path/nationalId/views', 'auth');
+        // $this->publishes([__DIR__.'/../path/nationalId/views' => resource_path('views/auth')]);
+
+        $this->publishes([__DIR__.'/../config/authentication.php' => config_path('authentication.php'), 'authentication-config']);
 
         $this->publishes([
-            __DIR__.'/../config/authentication.php' => config_path('authentication.php'),
-        ]);
+            __DIR__.'/path/assets'              => public_path(''),
+            __DIR__.'/../path/nationalId/views' => resource_path('views/auth')
+            
+        ], 'publisher-national-id');
     }
 
     public function register()

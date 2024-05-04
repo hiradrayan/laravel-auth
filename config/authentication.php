@@ -1,10 +1,18 @@
 <?php
 
 return [
+    'authentication' => 'national_id', // field mobile and national id is created
+    
     'database' => [
-        'required' => [
-            'national_id' => true,
-            'email'       => false
+        'national_id' => [
+            'registerFields' => [
+                'email',
+                'prefix_name',
+                'first_name',
+                'last_name',
+                'gender'
+            ]
         ]
+
     ]
 ];
