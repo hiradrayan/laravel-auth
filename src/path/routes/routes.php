@@ -1,5 +1,6 @@
 <?php
 
+use Authentication\path\nationalId\controllers\ForgetPasswordController;
 use Authentication\path\controllers\GeneralController;
 use Illuminate\Support\Facades\Route;
 use Authentication\path\nationalId\controllers\AuthController;
@@ -30,9 +31,6 @@ if (config('authentication.authentication') == 'national_id') {
         
             Route::get('/info', [AuthController::class, 'getUserInfo'])->name('user_info');
             Route::post('/info',[AuthController::class, 'postUserInfo']);
-        
-            Route::get('/extra-info', [AuthController::class, 'getExtraInfo'])->name('user_extra_info')->middleware('auth');
-            Route::post('/extra-info',[AuthController::class, 'postExtraInfo'])->middleware('auth');
         
         
             Route::get('/trusted-user/info', [AuthController::class, 'getTrustedUserInfo'])->name('trusted_user_info');

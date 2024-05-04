@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Authentication\path\nationalId\controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\ConfirmedPasswordRequest;
-use App\Http\Requests\Auth\NationalIdRequest;
-use App\Http\Requests\Auth\OtpRequest;
-use App\Models\User\User;
+use Authentication\path\nationalId\Requests\Auth\NationalIdRequest;
+use App\Models\User;
+use Authentication\path\nationalId\Requests\Auth\OtpRequest;
+use Authentication\path\nationalId\Requests\Auth\ConfirmedPasswordRequest;
 
 class ForgetPasswordController extends Controller
 {

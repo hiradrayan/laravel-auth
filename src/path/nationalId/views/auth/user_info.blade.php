@@ -117,7 +117,7 @@
                 </div>
             @endif
 
-            @if (is_array($registerFields) && array_key_exists('invitation_code', $registerFields))
+            @if (is_array($registerFields) && array_key_exists('recommender_user_id', $registerFields))
                 <div class="fv-row mb-10">
                     <label class="form-label fs-6 fw-bolder text-dark" for="recommender_user_hash">کد معرف</label>
                     <input id="recommender_user_hash"

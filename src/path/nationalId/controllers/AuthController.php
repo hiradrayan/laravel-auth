@@ -20,12 +20,6 @@ use Authentication\path\nationalId\Requests\Auth\UserInfoRequest;
 
 class AuthController extends Controller
 {
-    private $optSender;
-    public function __construct(OtpSenderInterface $optSender)
-    {
-        $this->optSender = $optSender;
-    }
-
     public function login (Request $request) {
 
         Session::put('back_url',$request->source);
@@ -303,7 +297,6 @@ class AuthController extends Controller
             $provinces = \DB::table('province_cities')->whereNull('parent_id')->orderBy('sort')->get();
         }
 
-        $registerFields = config('authentication.database.registerFields');
         $viewData = ['registerFields'];
         
         if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields)) {
@@ -336,36 +329,51 @@ class AuthController extends Controller
             // todo otp
             return redirect()->route('auth.otp')->with('alert.warning','کد تایید را وارد فرمایید.');
         }
-
-        $recoommenderUserId = null;
-        if ($request->recommender_user_hash) {
-            $recoommenderUser = User::where('hash',$request->recommender_user_hash)->first();
-
-            if (!$recoommenderUser) {
-                return  back()->withErrors(['recommender_user_hash' => 'هیچ کاربری با این کدمعرف یافت نشد'])->withInput($request->input());
+        $registerFields = config('authentication.database.registerFields');
+        if (is_array($registerFields) && array_key_exists('recommender_user_id', $registerFields))
+        {
+            $recoommenderUserId = null;
+            if ($request->recommender_user_hash) {
+                $recoommenderUser = User::where('hash',$request->recommender_user_hash)->first();
+    
+                if (!$recoommenderUser) {
+                    return  back()->withErrors(['recommender_user_hash' => 'هیچ کاربری با این کدمعرف یافت نشد'])->withInput($request->input());
+                }
+    
+                $recoommenderUserId = $recoommenderUser->id;
             }
-
-            $recoommenderUserId = $recoommenderUser->id;
         }
 
-        $user = new User([
-            'national_id'         => $national_id,
-            'mobile'              => $mobile,
-            'mobile_verified_at'  => new \DateTime('UTC'),
-            'first_name'          => $request->first_name,
-            'last_name'           => $request->last_name,
-            'gender'              => $request->gender,
-            'province_id'         => $request->province,
-            'city_id'             => $request->city,
-            'school_name'         => $request->school_name,
-            'password'            => \Hash::make($request->password),
-            'hash'                => $this->makeUniqueUserHash(),
-            'recommender_user_id' => $recoommenderUserId,
-            'grade_id'            => $request->grade,
-            'major_id'            => $request->major,
-        ]);
+        $userData = [
+            'national_id'        => $national_id,
+            'mobile'             => $mobile,
+            'mobile_verified_at' => new \DateTime('UTC'),
+            'password'           => \Hash::make($request->password),
+            'hash'               => $this->makeUniqueUserHash(),
+        ];
+        
+        if (is_array($registerFields) && array_key_exists('first_name', $registerFields)) {
+            $userData['first_name'] = $request->first_name;
+        }
+        if (is_array($registerFields) && array_key_exists('last_name', $registerFields)) {
+            $userData['last_name'] = $request->last_name;
+        }
+        if (is_array($registerFields) && array_key_exists('gender', $registerFields)) {
+            $userData['gender'] = $request->gender;
+        }
+        if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields)) {
+            $userData['province_id'] = $request->province;
+            $userData['city_id'] = $request->city;
+        }
+        if (is_array($registerFields) && array_key_exists('school', $registerFields)) {
+            $userData['school'] = $request->school_name;
+        }
+        if (is_array($registerFields) && array_key_exists('recommender_user_id', $registerFields)) {
+            $userData['recommender_user_id'] = $recoommenderUserId;
+        }
+        
+        $user = new User($userData);
 
-        $user->save();
 
         $this->loginUser($user);
         return  $this->findRedirectUrl($user);
@@ -513,83 +521,6 @@ class AuthController extends Controller
 
     }
 
-    public function getExtraInfo () {
-        $currentUser = Auth::user();
-
-        if (!$currentUser) {
-            return redirect()->route('home')->with('alert.warning','لطفا ابتدا وارد شوید');
-        }
-
-        $introducedUser = IntroducedUser::where('national_id', $currentUser->national_id)->first();
-        if (!$introducedUser ||
-            !in_array($currentUser->mobile,[$introducedUser->mobile, $introducedUser->mobile2, $introducedUser->mobile3])
-        ) {
-            return redirect()->route('home')->with('alert.warning','متاسفانه شما بعنوان لیست مجاز بورسیه تعریف نشده‌اید.');
-        }
-
-        if ($introducedUser->coupon_id) {
-            return redirect()->route('home')->with('alert.warning','شما قبلا تخفیف بورسیه را دریافت کرده‌اید');
-        }
-
-        if (!$introducedUser->user_id) {
-            $introducedUser->update([
-                'user_id' => $currentUser->id
-            ]);
-        }
-
-        $karnamehId = UserMetaService::get($currentUser->id,'KARNAMEH_ATTACHMENT_ID');
-        $moarefinamehId = UserMetaService::get($currentUser->id,'MOAREFINAMEH_ATTACHMENT_ID');
-
-        $karnameh = $karnamehId ? Attachment::find($karnamehId) : null;
-        $moarefinameh = $moarefinamehId ? Attachment::find($moarefinamehId) : null;
-
-        return view('auth.user_extra_info',compact('karnameh','moarefinameh'));
-    }
-
-    public function postExtraInfo (Request $request) {
-
-        $currentUser = Auth::user();
-
-        if (!$currentUser) {
-            return redirect()->route('home')->with('alert.warning','لطفا ابتدا وارد شوید');
-        }
-
-        $introducedUser = IntroducedUser::where('national_id', $currentUser->national_id)->first();
-        if (!$introducedUser ||
-            !in_array($currentUser->mobile,[$introducedUser->mobile, $introducedUser->mobile2, $introducedUser->mobile3])
-        ) {
-            return redirect()->route('home')->with('alert.warning','متاسفانه شما بعنوان لیست مجاز بورسیه تعریف نشده‌اید.');
-        }
-
-        if ($introducedUser->coupon_id) {
-            return redirect()->route('home')->with('alert.warning','شما قبلا تخفیف بورسیه را دریافت کرده‌اید');
-        }
-
-        if ($request->file('karnameh')) {
-            $attachment = UploadController::uploadImage(
-                $request->file('karnameh'),
-                "public/images/user/{$currentUser->id}/documents",
-            );
-
-            $lastAttachmentId = UserMetaService::get($currentUser->id,'KARNAMEH_ATTACHMENT_ID');
-            UploadController::removeAttachment($lastAttachmentId);
-            UserMetaService::update($currentUser->id,'KARNAMEH_ATTACHMENT_ID', $attachment->id);
-        }
-
-        if ($request->file('moarefinameh')) {
-            $attachment = UploadController::uploadImage(
-                $request->file('moarefinameh'),
-                "public/images/user/{$currentUser->id}/documents",
-            );
-
-            $lastAttachmentId = UserMetaService::get($currentUser->id,'MOAREFINAMEH_ATTACHMENT_ID');
-            UploadController::removeAttachment($lastAttachmentId);
-            UserMetaService::update($currentUser->id,'MOAREFINAMEH_ATTACHMENT_ID', $attachment->id);
-        }
-
-        return  redirect()->route('home')->with('alert.success','ثبت‌نام شما جهت بورسیه انجام شد و در وضعیت رزرو شده قرار گرفته اید.');
-    }
-
     public function sendOtp ($mobile)
     {
         $nowDate = new \DateTime('UTC');
@@ -613,7 +544,8 @@ class AuthController extends Controller
         \Session::put('otp', $otp);
 
         if (env('APP_ENV') != 'local') {
-            $this->optSender->sendOtp($mobile,['token' => $otp]);
+            $optSender = new OtpSenderInterface();
+            $optSender->sendOtp($mobile,['token' => $otp]);
         }
 
         SecurityLog::create([
@@ -660,44 +592,9 @@ class AuthController extends Controller
 
     public function findRedirectUrl ($user = null)
     {
-        $isLoginAsTeacher  = Session::get('login_as_teacher');
-        if ($isLoginAsTeacher) {
-            $teacherRegisterService = new RegisterService();
-            $teacherRegisterService->initialRegisterSteps($user);
-            $nextStep = $teacherRegisterService->findNextRegisterStep($user);
-
-            return redirect()->route('teacher.register.'.$nextStep);
-        }
-
-        $loginAsTrustedUser  = Session::get('login_as_trusted_user');
-        if ($loginAsTrustedUser) {
-            $trustedUser = null;
-            if ($user) {
-                $trustedUser = TrustedUser::where('user_id',$user->id)->first();
-            }
-            if ($trustedUser) {
-                if ($trustedUser->status == 1) {
-                    return redirect()->route('trusted-user.dashboard',['user_id' => $user->id]);
-                }
-                return  redirect()->route('trusted-user.tracking');
-            }
-            return  redirect()->route('auth.trusted_user_info');
-        }
 
         if (!$user) {
             return  redirect()->route('auth.user_info');
-        }
-
-        $introducedUser = IntroducedUser::where('national_id', $user->national_id)->first();
-        if ($introducedUser &&
-            in_array($user->mobile,[$introducedUser->mobile, $introducedUser->mobile2, $introducedUser->mobile3])
-        ) {
-            $karnameh = UserMetaService::get($user->id,'KARNAMEH_ATTACHMENT_ID');
-            $moarefinameh = UserMetaService::get($user->id,'MOAREFINAMEH_ATTACHMENT_ID');
-
-            if (!$karnameh || !$moarefinameh) {
-                return redirect()->route('auth.user_extra_info');
-            }
         }
 
         $back_url = Session::get('back_url');

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace Authentication\path\nationalId\Requests\Auth;
 
-use App\Http\Requests\GeneralRequest;
+use Authentication\path\nationalId\Requests\GeneralRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConfirmedPasswordRequest extends GeneralRequest
