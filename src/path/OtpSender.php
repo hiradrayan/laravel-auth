@@ -1,6 +1,6 @@
 <?php
 
-namespace Authentication\path;
+namespace App\Http\Services\Sms;
 
 use Authentication\Interface\OtpSenderInterface;
 

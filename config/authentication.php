@@ -15,7 +15,7 @@ return [
         ]
     ],
 
-    'otp_sender' => App\Http\Services\Notification\OtpSender::class,
+    'otp_sender' => App\Http\Services\Sms\OtpSender::class,
 
     'logo_url' => 'assets/img/bamdad-logo.png'
 
