@@ -10,8 +10,8 @@ return [
             'gender'            => false,
             'email'             => false,
             'province_and_city' => true,
-            // 'school'            => true,
-            // 'invitation_code'   => false,
+            // 'school'              => true,
+            // 'recommender_user_id' => false,
         ]
     ],
 

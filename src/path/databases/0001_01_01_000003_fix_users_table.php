@@ -36,6 +36,7 @@ return new class extends Migration
                 $table->string('mobile',11)->after('national_id');
                 $table->timestamp('mobile_verified_at')->nullable()->after('mobile');
             }
+            $table->string('hash',8)->unique();
             
             foreach (Arr::except(config('authentication.database.registerFields'), ['national_id', 'password', 'password_confirmation', 'mobile', 'province_and_city']) as $key => $value)
             {

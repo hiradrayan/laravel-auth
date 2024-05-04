@@ -24,16 +24,25 @@ class UserInfoRequest extends GeneralRequest
      */
     public function rules()
     {
-        return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'gender' => 'required',
-            'province' => 'required',
-            'city' => 'required',
-            'password' => 'required|min:8',
-            'grade' => 'required',
-            'major' => 'required_if:grade,10,11,12',
-            'mobile' => 'mobile'
-        ];
+        $registerFields = config('authentication.database.registerFields');
+
+        $requiredFields = [];
+        if ($registerFields['first_name']) {
+            $requiredFields['first_name'] = 'required';
+        }
+        if ($registerFields['last_name']) {
+            $requiredFields['last_name'] = 'required';
+        }
+        if ($registerFields['gender']) {
+            $requiredFields['gender'] = 'required';
+        }
+        if ($registerFields['province_and_city']) {
+            $requiredFields['province'] = 'required';
+            $requiredFields['city'] = 'required';
+        }
+        $requiredFields['password'] = 'required|min:8';
+        $requiredFields['mobile'] = 'mobile';
+        
+        return $requiredFields;
     }
 }
