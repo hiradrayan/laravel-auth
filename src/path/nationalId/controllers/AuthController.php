@@ -298,14 +298,19 @@ class AuthController extends Controller
             // todo otp
             return redirect()->route('auth.otp')->with('alert.warning','کد تایید را وارد فرمایید.');
         }
+        $registerFields = config('authentication.database.registerFields');
+        if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields)) {
+            $provinces = \DB::table('province_cities')->whereNull('parent_id')->orderBy('sort')->get();
+        }
 
-        $provinces = \DB::table('province_cities')->whereNull('parent_id')->orderBy('sort')->get();
-
-        $grades = \DB::table('grades')->orderBy('id')->get();
-        return view('auth.user_info',compact(
-            'provinces',
-            'grades',
-        ));
+        $registerFields = config('authentication.database.registerFields');
+        $viewData = ['registerFields'];
+        
+        if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields)) {
+            $viewData[] = 'provinces';
+        }
+        
+        return view('auth::auth.user_info', compact($viewData));
     }
 
     public function postUserInfo (UserInfoRequest $request)

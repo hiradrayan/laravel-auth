@@ -4,14 +4,14 @@ return [
     'authentication' => 'national_id', // field mobile and national id is created
     
     'database' => [
-        'national_id' => [
-            'registerFields' => [
-                'email',
-                'prefix_name',
-                'first_name',
-                'last_name',
-                'gender'
-            ]
+        'registerFields' => [
+            'first_name'        => true,
+            'last_name'         => true,
+            'gender'            => true,
+            'email'             => false,
+            'province_and_city' => true,
+            // 'school'            => true,
+            // 'invitation_code'   => false,
         ]
     ],
 

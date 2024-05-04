@@ -12,67 +12,74 @@
             <div class="text-center mb-10">
                 <h1 class="text-dark mb-3">تکمیل اطلاعات</h1>
             </div>
+            @if (is_array($registerFields) && array_key_exists('first_name', $registerFields))
+                <div class="fv-row mb-10">
+                    <label class="form-label fs-6 fw-bolder text-dark" for="first_name">نام</label>
+                    <input id="first_name"
+                        type="text"
+                        name="first_name"
+                        autocomplete="off"
+                        data-lpignore="true"
+                        class="form-control form-control-lg form-control-solid @error('first_name') is-invalid @enderror"
+                        value="{{ old('first_name') }}"
+                    />
+                    @error('first_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+            @endif
 
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="first_name">نام</label>
-                <input id="first_name"
-                       type="text"
-                       name="first_name"
-                       autocomplete="off"
-                       data-lpignore="true"
-                       class="form-control form-control-lg form-control-solid @error('first_name') is-invalid @enderror"
-                       value="{{ old('first_name') }}"
-                />
-                @error('first_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            @if (is_array($registerFields) && array_key_exists('last_name', $registerFields))
+                <div class="fv-row mb-10">
+                    <label class="form-label fs-6 fw-bolder text-dark" for="last_name">نام خانوادگی</label>
+                    <input id="last_name"
+                        type="text"
+                        name="last_name"
+                        autocomplete="off"
+                        class="form-control form-control-lg form-control-solid @error('last_name') is-invalid @enderror"
+                        value="{{ old('last_name') }}"
+                    />
+                    @error('last_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+            @endif
 
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="last_name">نام خانوادگی</label>
-                <input id="last_name"
-                       type="text"
-                       name="last_name"
-                       autocomplete="off"
-                       class="form-control form-control-lg form-control-solid @error('last_name') is-invalid @enderror"
-                       value="{{ old('last_name') }}"
-                />
-                @error('last_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            @if (is_array($registerFields) && array_key_exists('gender', $registerFields))
+                <div class="fv-row mb-10">
+                    <label class="form-label fs-6 fw-bolder text-dark" for="gender">جنسیت</label>
+                    <select id="gender"
+                            name="gender"
+                            class=" form-select form-select-solid">
+                        <option value="m" {{ old('gender') == 'm' ? 'selected' : '' }} >پسر</option>
+                        <option value="f" {{ old('gender') == 'f' ? 'selected' : '' }}>دختر</option>
+                    </select>
+                    @error('gender') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+            @endif
 
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="gender">جنسیت</label>
-                <select id="gender"
-                        name="gender"
-                        class=" form-select form-select-solid">
-                    <option value="m" {{ old('gender') == 'm' ? 'selected' : '' }} >پسر</option>
-                    <option value="f" {{ old('gender') == 'f' ? 'selected' : '' }}>دختر</option>
-                </select>
-                @error('gender') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            @if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields))
+                <div class="fv-row mb-10">
+                    <label class="form-label fs-6 fw-bolder text-dark @error('province')  is-invalid @enderror" for="province">استان</label>
+                    <select id="province"
+                            name="province"
+                            class=" form-select form-select-solid basic-select2">
+                        <option value=""  disabled selected>انتخاب کنید</option>
+                        @foreach($provinces as $province)
+                            <option value="{{ $province->id }}" {{ old('province') == $province->id ? 'selected' : '' }} >{{ $province->title }}</option>
+                        @endforeach
+                    </select>
+                    @error('province') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
 
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark @error('province')  is-invalid @enderror" for="province">استان</label>
-                <select id="province"
-                        name="province"
-                        class=" form-select form-select-solid basic-select2">
-                    <option value=""  disabled selected>انتخاب کنید</option>
-                    @foreach($provinces as $province)
-                        <option value="{{ $province->id }}" {{ old('province') == $province->id ? 'selected' : '' }} >{{ $province->title }}</option>
-                    @endforeach
-                </select>
-                @error('province') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+                <div class="fv-row mb-10">
+                    <label class="form-label fs-6 fw-bolder text-dark @error('city')  is-invalid @enderror" for="city">شهر</label>
+                    <select id="city"
+                            name="city"
+                            class=" form-select form-select-solid basic-select2">
+                        <option value=""  disabled selected>انتخاب کنید</option>
+                    </select>
+                    @error('city') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+            @endif
 
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark @error('city')  is-invalid @enderror" for="city">شهر</label>
-                <select id="city"
-                        name="city"
-                        class=" form-select form-select-solid basic-select2">
-                    <option value=""  disabled selected>انتخاب کنید</option>
-                </select>
-                @error('city') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-
-            <div class="fv-row mb-10">
+            {{--  <div class="fv-row mb-10">
                 <label class="form-label fs-6 fw-bolder text-dark" for="grade">مقطع</label>
                 <select id="grade"
                         name="grade"
@@ -93,48 +100,37 @@
                     <option value={null}  disabled selected>انتخاب کنید</option>
                 </select>
                 @error('major') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            </div>  --}}
 
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="school_name">نام مدرسه</label>
-                <input id="school_name"
-                       type="text"
-                       name="school_name"
-                       autocomplete="off"
-                       data-lpignore="true"
-                       class="form-control form-control-lg form-control-solid @error('school_name') is-invalid @enderror"
-                       value="{{ old('school_name') }}"
-                />
-                @error('school_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            @if (is_array($registerFields) && array_key_exists('school', $registerFields))
+                <div class="fv-row mb-10">
+                    <label class="form-label fs-6 fw-bolder text-dark" for="school_name">نام مدرسه</label>
+                    <input id="school_name"
+                        type="text"
+                        name="school_name"
+                        autocomplete="off"
+                        data-lpignore="true"
+                        class="form-control form-control-lg form-control-solid @error('school_name') is-invalid @enderror"
+                        value="{{ old('school_name') }}"
+                    />
+                    @error('school_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+            @endif
 
-{{--            <div class="fv-row mb-10">--}}
-{{--                <label class="form-label fs-6 fw-bolder text-dark" for="date">شماره موبایل دوم</label>--}}
-{{--                <input id="mobile"--}}
-{{--                       type="text"--}}
-{{--                       name="mobile"--}}
-{{--                       autocomplete="off"--}}
-{{--                       placeholder="09_________"--}}
-{{--                       maxlength="11"--}}
-{{--                       class="form-control form-control-lg form-control-solid text-ltr @error('mobile') is-invalid @enderror"--}}
-{{--                       value="{{ old('mobile') }}"--}}
-{{--                />--}}
-{{--                <small id="form_title_help" class="form-text text-muted">لطفا جهت بازیابی اطلاعات، شماره موبایل بستگان درجه یک (پدر یا مادر) را وارد فرمایید.</small>--}}
-{{--                @error('mobile') <div class="invalid-feedback">{{ $message }}</div> @enderror--}}
-{{--            </div>--}}
-
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="recommender_user_hash">کد معرف</label>
-                <input id="recommender_user_hash"
-                       type="text"
-                       name="recommender_user_hash"
-                       autocomplete="off"
-                       data-lpignore="true"
-                       class="form-control text-ltr form-control-lg form-control-solid @error('recommender_user_hash') is-invalid @enderror"
-                       value="{{ old('recommender_user_hash') ?? request()->session()->get('recommender_user_hash') }}"
-                />
-                @error('recommender_user_hash') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
+            @if (is_array($registerFields) && array_key_exists('invitation_code', $registerFields))
+                <div class="fv-row mb-10">
+                    <label class="form-label fs-6 fw-bolder text-dark" for="recommender_user_hash">کد معرف</label>
+                    <input id="recommender_user_hash"
+                        type="text"
+                        name="recommender_user_hash"
+                        autocomplete="off"
+                        data-lpignore="true"
+                        class="form-control text-ltr form-control-lg form-control-solid @error('recommender_user_hash') is-invalid @enderror"
+                        value="{{ old('recommender_user_hash') ?? request()->session()->get('recommender_user_hash') }}"
+                    />
+                    @error('recommender_user_hash') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+            @endif
 
             <div class="mb-10 fv-row" data-kt-password-meter="true">
                 <!--begin::Wrapper-->
@@ -186,14 +182,8 @@
 
         });
 
-        $('#grade').on('change',function (){
-            var grade_id = $(this).val();
-            getGradeMajors (grade_id);
-        });
-
         $(document).ready(function () {
             var province_id = $('#province').val();
-            var grade_id = $('#grade').val();
 
             if (province_id) {
                 getProvinceCities(province_id);
@@ -201,9 +191,6 @@
 
             $('.basic-select2').select2();
 
-            if (grade_id) {
-                getGradeMajors(grade_id);
-            }
         });
 
         function getProvinceCities (province_id) {
@@ -228,38 +215,6 @@
 
             })
 
-        }
-
-        function getGradeMajors (grade_id) {
-            $.post('{{ route('get_grade_majors') }}',{
-                'grade_id': grade_id
-            }).done(function (data) {
-                $('#major')
-                    .empty()
-                    .append("<option value={null}  selected disabled >انتخاب رشته</option>");
-
-                var majors = data.result.majors;
-
-                console.log(majors.length);
-
-                if (majors.length) {
-                    $("#major").attr('required','required');
-                } else {
-                    $("#major").removeAttr('required');
-                }
-
-                majors.map(major => {
-                    $("#major").append(new Option(major.title, major.id));
-                });
-
-                oldMajor = '{{ old('major') }}';
-                console.log(oldMajor);
-                if (oldMajor) {
-                    $("#major").val('{{ old('major') }}');
-                    $("#major").trigger('change');
-                }
-
-            });
         }
     </script>
 @endsection
