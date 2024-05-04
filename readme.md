@@ -22,7 +22,7 @@ php artisan migrate
 
 4. (Optional) If you want to customize the login form, you can publish the login form views by running the following command:
 ```
-php artisan vendor:publish --tag=login-form
+php artisan vendor:publish --tag=publisher-national-id
 ```
 This will copy the login form views to your application's resources/views/auth directory. You can then modify these views to suit your needs.
 

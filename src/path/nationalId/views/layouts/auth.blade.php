@@ -9,7 +9,7 @@
     <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed bg-light">
         <div class="d-flex flex-center flex-column flex-column-fluid p-5 pb-lg-20">
             <a href="" class="mb-12">
-                <img alt="Logo" src="{{ asset('assets/img/bamdad-logo.png') }}" class="h-40px"/>
+                <img alt="Logo" src="{{ asset(config('authentication.logo_url')) }}" class="h-40px"/>
             </a>
 
             @if (Session::has('alert') && Session::get('alert'))
