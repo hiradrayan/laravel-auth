@@ -3,7 +3,6 @@
 namespace Authentication\path\nationalId\Requests\Auth;
 
 use Authentication\path\nationalId\Requests\GeneralRequest;
-use App\Http\Services\StringFunctions;
 use Illuminate\Validation\Factory;
 
 class NationalIdRequest extends GeneralRequest

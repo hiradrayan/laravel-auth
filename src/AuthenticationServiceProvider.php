@@ -18,8 +18,8 @@ class AuthenticationServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../config/authentication.php' => config_path('authentication.php'), 'authentication-config']);
 
         $this->publishes([
-            __DIR__.'/path/assets'              => public_path(''),
-            __DIR__.'/../path/nationalId/views' => resource_path('views/auth')
+            __DIR__.'/path/assets'              => public_path('/assets'),
+            __DIR__.'/path/nationalId/views' => resource_path('views')
             
         ], 'publisher-national-id');
     }

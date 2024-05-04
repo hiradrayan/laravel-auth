@@ -4,7 +4,7 @@ use App\Http\Services\Course\CourseService;
 use App\Http\Services\File\ImageFilterService;
 use App\Http\Services\jDateTime;
 use App\Http\Services\NumToWord_Fa;
-use App\Http\Services\StringFunctions;
+use Authentication\path\Service\StringFunctions;
 use App\Http\Services\User\AuthService;
 use App\Models\App\Accounting;
 use App\Models\App\Attachment;

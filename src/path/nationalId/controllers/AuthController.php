@@ -52,7 +52,7 @@ class AuthController extends Controller
             'is_verified',
         ]);
 
-        return view('auth::national_id');
+        return view('auth::auth.national_id');
     }
 
     public function postNationalId (NationalIdRequest $request)
