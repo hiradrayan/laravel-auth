@@ -15,11 +15,18 @@ return new class extends Migration
     {
         $registerFields = config('authentication.database.registerFields');
         if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields)) {
-            Schema::create('province_cities', function (Blueprint $table) {
+            Schema::create('provinces', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('parent_id')->nullable()->constrained('province_cities');
-                $table->string('title');
-                $table->integer('sort');
+                $table->string('name' , 90);
+                $table->boolean('status')->default(0);
+                $table->timestamps();
+            });
+
+            Schema::create('cities', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('province_id')->constrained('provinces')->onDelete('cascade')->onUpdate('cascade');
+                $table->string('name' , 90);
+                $table->boolean('status')->default(0);
                 $table->timestamps();
             });
         }

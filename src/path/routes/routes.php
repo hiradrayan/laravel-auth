@@ -68,3 +68,8 @@ if (config('authentication.authentication') == 'national_id') {
         });
     });
 }
+
+$registerFields = config('authentication.database.registerFields');
+if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields)){
+    Route::post('/general/province-cities', ['App\Http\Controllers\API\GeneralController','getProvinceCities'])->name('get_province_cities');
+}
