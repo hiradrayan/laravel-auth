@@ -19,7 +19,7 @@ return new class extends Migration
                 $table->id();
                 $table->foreignId('parent_id')->nullable()->constrained('province_cities');
                 $table->string('title');
-                $table->integer('sort');
+                $table->integer('sort')->default(1);
                 $table->timestamps();
             });
         }
