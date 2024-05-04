@@ -1,6 +1,6 @@
 <?php
 
-namespace Authentication\path\seeders;
+namespace Authentication\seeders;
 
 use App\Models\User;
 use Authentication\path\models\ProvinceCity;
@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            ProvinceCity::class,
+            ProvinceCitySeeder::class,
             UserSeeder::class
         ]);
     }

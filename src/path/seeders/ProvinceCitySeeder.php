@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProvinceSeeder extends Seeder
+class ProvinceCitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -262,9 +262,9 @@ class ProvinceSeeder extends Seeder
                 'sort' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ],
+            ]
         ];
 
-        DB::table('provinces')->insert($province_city);
+        DB::table('province_cities')->insert($province_city);
     }
 }

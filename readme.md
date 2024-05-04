@@ -11,7 +11,7 @@ composer require reyhane1376/laravel-auth
 
 2. Publish the package migrations by running the following command:
 ```
-php artisan vendor:publish --tag=migration
+php artisan migrate && php artisan db:seed --class="Authentication\\path\\seeders\\DatabaseSeeder" 
 ```
 This will copy the migration files to your application's database/migrations directory.
 

@@ -7,7 +7,7 @@ return [
         'registerFields' => [
             'first_name'        => true,
             'last_name'         => true,
-            'gender'            => true,
+            'gender'            => false,
             'email'             => false,
             'province_and_city' => true,
             // 'school'            => true,

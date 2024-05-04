@@ -39,7 +39,7 @@ return new class extends Migration
             
             foreach (Arr::except(config('authentication.database.registerFields'), ['national_id', 'password', 'password_confirmation', 'mobile', 'province_and_city']) as $key => $value)
             {
-                $table->string($key)->nullable($value)->after('mobile');
+                $table->string($key)->nullable(!$value)->after('mobile');
             }
 
 
