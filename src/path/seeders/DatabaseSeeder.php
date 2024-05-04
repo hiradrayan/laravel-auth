@@ -1,6 +1,6 @@
 <?php
 
-namespace Authentication\seeders;
+namespace Authentication\path\seeders;
 
 use App\Models\User;
 use Authentication\path\models\ProvinceCity;

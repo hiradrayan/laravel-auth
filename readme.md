@@ -11,13 +11,13 @@ composer require reyhane1376/laravel-auth
 
 2. Publish the package migrations by running the following command:
 ```
-php artisan migrate && php artisan db:seed --class="Authentication\\path\\seeders\\DatabaseSeeder" 
+php artisan vendor:publish --tag=migration
 ```
 This will copy the migration files to your application's database/migrations directory.
 
 3. Run the database migrations to create the required tables:
 ```
-php artisan migrate
+php artisan migrate && php artisan db:seed --class="Authentication\\path\\seeders\\DatabaseSeeder" 
 ```
 
 4. (Optional) If you want to customize the login form, you can publish the login form views by running the following command:
