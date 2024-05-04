@@ -19,8 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Authentication\\": "src/",
-            "Authentication\\seeders": "src/path/seeders"
+            "Authentication\\": "src/"
         },
         "files": [
             "src/path/Helpers/helpers.php"
