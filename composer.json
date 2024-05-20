@@ -1,5 +1,5 @@
 {
-    "name": "authentication/laravel-auth",
+    "name": "hiradrayan/laravel-auth",
     "description": ":description",
     "license": "MIT",
     "authors": [
@@ -10,7 +10,7 @@
         },
         {
             "name": "SadeqRouhani",
-            "email": "reyhaneebrahimi27@yahoo.com",
+            "email": "sa.rohani72@gmaila.com",
             "homepage": "https://github.com/sadeqRouhani"
         }
     ],
