@@ -6,7 +6,7 @@ This package provides an authentication system for Laravel applications using th
 
 1. Install the package using Composer by running the following command:
 ```
-
+composer require hiradrayan/laravel-auth
 ```
 
 2. Publish the package migrations by running the following command:
