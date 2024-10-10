@@ -83,6 +83,11 @@ class AuthController extends Controller
             return  redirect()->route('auth.password');
         }
 
+        if (!config('authentication.registration'))
+        {
+            return back()->with('alert.warning', 'کاربر دسترسی های لازم را ندارد.');
+        }
+
         return redirect()->route('auth.mobile');
     }
 

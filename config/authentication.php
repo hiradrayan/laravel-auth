@@ -2,6 +2,7 @@
 
 return [
     'authentication' => 'national_id', // field mobile and national id is created
+    'registration' => true,
     
     'database' => [
         'registerFields' => [
