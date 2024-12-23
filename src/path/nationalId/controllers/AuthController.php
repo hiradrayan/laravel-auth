@@ -549,7 +549,7 @@ class AuthController extends Controller
         \Session::put('otp', $otp);
 
         if (env('APP_ENV') != 'local') {
-            $optSender = new OtpSenderInterface();
+            $optSender = app(OtpSenderInterface::class);
             $optSender->sendOtp($mobile,['token' => $otp]);
         }
 
