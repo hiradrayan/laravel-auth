@@ -80,26 +80,6 @@
             </div>
             @endif
 
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="grade">پایه</label>
-                <select id="grade"
-                        name="grade"
-                        class=" form-select form-select-solid @error('grade') is-invalid @enderror">
-                    <option value=""  disabled selected>انتخاب کنید</option>
-                </select>
-                @error('grade') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="major">رشته</label>
-                <select id="major"
-                        name="major"
-                        class=" form-select form-select-solid @error('major') is-invalid @enderror">
-                    <option value={null}  disabled selected>انتخاب کنید</option>
-                </select>
-                @error('major') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-
             @if (is_array($registerFields) && array_key_exists('school', $registerFields))
             <div class="fv-row mb-10">
                 <label class="form-label fs-6 fw-bolder text-dark" for="school_name">نام مدرسه</label>
