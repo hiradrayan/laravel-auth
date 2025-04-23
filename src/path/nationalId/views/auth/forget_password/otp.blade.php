@@ -1,46 +1,55 @@
 @extends('layouts.auth')
 
 @section('content')
-    <div class="w-lg-500px bg-body rounded shadow-sm p-5 p-lg-15 mx-auto">
+    <div class="login-box-password">
 
-        <form class="form w-100" novalidate="novalidate" action="{{ route('auth.forget.otp') }}" method="POST">
-            @csrf
-            <div class="text-center mb-10">
-                <h1 class="text-dark mb-3">تغییر کلمه عبور</h1>
-                <div class="text-muted fw-bold fs-7 mb-5">کد فعال‌سازی برای شماره تلفن همراه زیر ارسال شد
-                    <div style="direction: ltr;" >«{{ masked_mobile($mobile) }}»</div> </div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-6 auth-login-btn">تغییر کلمه عبور</div>
+        </div>
+
+        <div class="auth-login-box">
+            <div class="text-center auth-login-logo">
+                <img src="{{ asset('assets/img/user-avatar.svg') }}" alt="">
             </div>
-
-            <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="otp">کد فعال‌سازی</label>
-                <input id="otp"
-                       type="text"
-                       name="otp"
-                       maxlength="4"
-                       autocomplete="off"
-                       style="font-size: 20px"
-                       placeholder="_ _ _ _"
-                       class="form-control form-control-lg form-control-solid  text-lg-center @error('otp') is-invalid @enderror"
-                       value="{{ old('otp') ?? (env('APP_ENV') == 'local' ? session()->get('otp') : '')  }}"
-                />
-                @error('otp') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-
-            <div class="text-nowrap text-center mt-lg-5 mb-lg-5">
-                <div id="resend_sms_timer_block">
-                    ارسال مجدد کد تا <span id="resend_sms_timer" style="display: inline-block; width: 30px;"> ۱:۵۹ </span>  دیگر
+            <form class="form w-100" novalidate="novalidate" action="{{ route('auth.forget.otp') }}" method="POST">
+                @csrf
+                <div class="text-center mb-10">
+                    {{--  <h1 class="text-dark mb-3"></h1>  --}}
+                    <div class="auth-text-password mb-5">کد فعال‌سازی برای شماره تلفن همراه زیر ارسال شد
+                        <div style="direction: ltr;" >«{{ masked_mobile($mobile) }}»</div> </div>
                 </div>
 
-                <a href="javascript:resendOtp()" style="display: none; cursor: pointer!important;" id="resend_sms_link" class="font-weight-bold" >دریافت مجدد کد تایید</a>
-            </div>
+                <div class="fv-row mb-10">
+                    {{--  <label class="form-label fs-6 fw-bolder text-dark" for="otp"></label>  --}}
+                    <input id="otp"
+                        type="text"
+                        name="otp"
+                        maxlength="4"
+                        autocomplete="off"
+                        style="font-size: 20px"
+                        placeholder="کد فعال‌سازی"
+                        class="form-control form-control-lg form-control-solid  text-lg-center @error('otp') is-invalid @enderror"
+                        value="{{ old('otp') ?? (env('APP_ENV') == 'local' ? session()->get('otp') : '')  }}"
+                    />
+                    @error('otp') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+
+                <div class="text-nowrap text-center mt-lg-5 mb-lg-5 auth-text-password">
+                    <div id="resend_sms_timer_block">
+                        ارسال مجدد کد تا <span id="resend_sms_timer" style="display: inline-block; width: 30px;"> ۱:۵۹ </span>  دیگر
+                    </div>
+
+                    <a href="javascript:resendOtp()" style="display: none; cursor: pointer!important;" id="resend_sms_link" class="auth-text-password" >دریافت مجدد کد تایید</a>
+                </div>
 
 
-            <div class="text-center">
-                <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-                    <span class="indicator-label">تایید</span>
-                </button>
-            </div>
-        </form>
+                <div class="text-center">
+                    <button type="submit" id="kt_sign_in_submit" class="btn btn-sm final-auth-login-btn">
+                        <span class="indicator-label">تایید</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
 @endsection

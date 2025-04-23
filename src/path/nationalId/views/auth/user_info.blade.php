@@ -13,81 +13,79 @@
                 <h1 class="text-dark mb-3">تکمیل اطلاعات</h1>
             </div>
             @if (is_array($registerFields) && array_key_exists('first_name', $registerFields))
-                <div class="fv-row mb-10">
-                    <label class="form-label fs-6 fw-bolder text-dark" for="first_name">نام</label>
-                    <input id="first_name"
-                        type="text"
-                        name="first_name"
-                        autocomplete="off"
-                        data-lpignore="true"
-                        class="form-control form-control-lg form-control-solid @error('first_name') is-invalid @enderror"
-                        value="{{ old('first_name') }}"
-                    />
-                    @error('first_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark" for="first_name">نام</label>
+                <input id="first_name"
+                    type="text"
+                    name="first_name"
+                    autocomplete="off"
+                    data-lpignore="true"
+                    class="form-control form-control-lg form-control-solid @error('first_name') is-invalid @enderror"
+                    value="{{ old('first_name') }}"
+                />
+                @error('first_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
             @endif
 
             @if (is_array($registerFields) && array_key_exists('last_name', $registerFields))
-                <div class="fv-row mb-10">
-                    <label class="form-label fs-6 fw-bolder text-dark" for="last_name">نام خانوادگی</label>
-                    <input id="last_name"
-                        type="text"
-                        name="last_name"
-                        autocomplete="off"
-                        class="form-control form-control-lg form-control-solid @error('last_name') is-invalid @enderror"
-                        value="{{ old('last_name') }}"
-                    />
-                    @error('last_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark" for="last_name">نام خانوادگی</label>
+                <input id="last_name"
+                    type="text"
+                    name="last_name"
+                    autocomplete="off"
+                    class="form-control form-control-lg form-control-solid @error('last_name') is-invalid @enderror"
+                    value="{{ old('last_name') }}"
+                />
+                @error('last_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
             @endif
 
             @if (is_array($registerFields) && array_key_exists('gender', $registerFields))
-                <div class="fv-row mb-10">
-                    <label class="form-label fs-6 fw-bolder text-dark" for="gender">جنسیت</label>
-                    <select id="gender"
-                            name="gender"
-                            class=" form-select form-select-solid">
-                        <option value="m" {{ old('gender') == 'm' ? 'selected' : '' }} >پسر</option>
-                        <option value="f" {{ old('gender') == 'f' ? 'selected' : '' }}>دختر</option>
-                    </select>
-                    @error('gender') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark" for="gender">جنسیت</label>
+                <select id="gender"
+                        name="gender"
+                        class=" form-select form-select-solid">
+                    <option value="m" {{ old('gender') == 'm' ? 'selected' : '' }} >پسر</option>
+                    <option value="f" {{ old('gender') == 'f' ? 'selected' : '' }}>دختر</option>
+                </select>
+                @error('gender') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
             @endif
 
             @if (is_array($registerFields) && array_key_exists('province_and_city', $registerFields))
-                <div class="fv-row mb-10">
-                    <label class="form-label fs-6 fw-bolder text-dark @error('province')  is-invalid @enderror" for="province">استان</label>
-                    <select id="province"
-                            name="province"
-                            class=" form-select form-select-solid basic-select2">
-                        <option value=""  disabled selected>انتخاب کنید</option>
-                        @foreach($provinces as $province)
-                            <option value="{{ $province->id }}" {{ old('province') == $province->id ? 'selected' : '' }} >{{ $province->title }}</option>
-                        @endforeach
-                    </select>
-                    @error('province') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
 
-                <div class="fv-row mb-10">
-                    <label class="form-label fs-6 fw-bolder text-dark @error('city')  is-invalid @enderror" for="city">شهر</label>
-                    <select id="city"
-                            name="city"
-                            class=" form-select form-select-solid basic-select2">
-                        <option value=""  disabled selected>انتخاب کنید</option>
-                    </select>
-                    @error('city') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark @error('province')  is-invalid @enderror" for="province">استان</label>
+                <select id="province"
+                        name="province"
+                        class=" form-select form-select-solid basic-select2">
+                    <option value=""  disabled selected>انتخاب کنید</option>
+                    @foreach($provinces as $province)
+                        <option value="{{ $province->id }}" {{ old('province') == $province->id ? 'selected' : '' }} >{{ $province->title }}</option>
+                    @endforeach
+                </select>
+                @error('province') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark @error('city')  is-invalid @enderror" for="city">شهر</label>
+                <select id="city"
+                        name="city"
+                        class=" form-select form-select-solid basic-select2">
+                    <option value=""  disabled selected>انتخاب کنید</option>
+                </select>
+                @error('city') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
             @endif
 
-            {{--  <div class="fv-row mb-10">
-                <label class="form-label fs-6 fw-bolder text-dark" for="grade">مقطع</label>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark" for="grade">پایه</label>
                 <select id="grade"
                         name="grade"
                         class=" form-select form-select-solid @error('grade') is-invalid @enderror">
                     <option value=""  disabled selected>انتخاب کنید</option>
-                    @foreach($grades as $grade)
-                        <option value="{{ $grade->id }}" {{ old('grade') == $grade->id ? 'selected' : '' }} >{{ $grade->title }}</option>
-                    @endforeach
                 </select>
                 @error('grade') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
@@ -100,36 +98,36 @@
                     <option value={null}  disabled selected>انتخاب کنید</option>
                 </select>
                 @error('major') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>  --}}
+            </div>
 
             @if (is_array($registerFields) && array_key_exists('school', $registerFields))
-                <div class="fv-row mb-10">
-                    <label class="form-label fs-6 fw-bolder text-dark" for="school_name">نام مدرسه</label>
-                    <input id="school_name"
-                        type="text"
-                        name="school_name"
-                        autocomplete="off"
-                        data-lpignore="true"
-                        class="form-control form-control-lg form-control-solid @error('school_name') is-invalid @enderror"
-                        value="{{ old('school_name') }}"
-                    />
-                    @error('school_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark" for="school_name">نام مدرسه</label>
+                <input id="school_name"
+                    type="text"
+                    name="school_name"
+                    autocomplete="off"
+                    data-lpignore="true"
+                    class="form-control form-control-lg form-control-solid @error('school_name') is-invalid @enderror"
+                    value="{{ old('school_name') }}"
+                />
+                @error('school_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
             @endif
 
             @if (is_array($registerFields) && array_key_exists('recommender_user_id', $registerFields))
-                <div class="fv-row mb-10">
-                    <label class="form-label fs-6 fw-bolder text-dark" for="recommender_user_hash">کد معرف</label>
-                    <input id="recommender_user_hash"
-                        type="text"
-                        name="recommender_user_hash"
-                        autocomplete="off"
-                        data-lpignore="true"
-                        class="form-control text-ltr form-control-lg form-control-solid @error('recommender_user_hash') is-invalid @enderror"
-                        value="{{ old('recommender_user_hash') ?? request()->session()->get('recommender_user_hash') }}"
-                    />
-                    @error('recommender_user_hash') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                </div>
+            <div class="fv-row mb-10">
+                <label class="form-label fs-6 fw-bolder text-dark" for="recommender_user_hash">کد معرف</label>
+                <input id="recommender_user_hash"
+                    type="text"
+                    name="recommender_user_hash"
+                    autocomplete="off"
+                    data-lpignore="true"
+                    class="form-control text-ltr form-control-lg form-control-solid @error('recommender_user_hash') is-invalid @enderror"
+                    value="{{ old('recommender_user_hash') ?? request()->session()->get('recommender_user_hash') }}"
+                />
+                @error('recommender_user_hash') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
             @endif
 
             <div class="mb-10 fv-row" data-kt-password-meter="true">
@@ -166,7 +164,7 @@
 
 
             <div class="text-center">
-                <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
+                <button type="submit" id="kt_sign_in_submit" class="btn btn-sm final-auth-login-btn">
                     <span class="indicator-label">ادامه</span>
                 </button>
             </div>
