@@ -27,16 +27,16 @@ class UserInfoRequest extends GeneralRequest
         $registerFields = config('authentication.database.registerFields');
 
         $requiredFields = [];
-        if ($registerFields['first_name']) {
+        if (isset($registerFields['first_name'])) {
             $requiredFields['first_name'] = 'required';
         }
-        if ($registerFields['last_name']) {
+        if (isset($registerFields['last_name'])) {
             $requiredFields['last_name'] = 'required';
         }
-        if ($registerFields['gender']) {
+        if (isset($registerFields['gender'])) {
             $requiredFields['gender'] = 'required';
         }
-        if ($registerFields['province_and_city']) {
+        if (isset($registerFields['province_and_city'])) {
             $requiredFields['province'] = 'required';
             $requiredFields['city'] = 'required';
         }
