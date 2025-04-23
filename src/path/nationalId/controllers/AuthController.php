@@ -607,7 +607,7 @@ class AuthController extends Controller
             return redirect($back_url)->with('alert.success',$user->first_name . ' عزیز، خوش آمدید');
         }
 
-        return redirect()->route('home')->with('alert.success',$user->first_name . ' عزیز، خوش آمدید');
+        return redirect()->route('admin.dashboard')->with('alert.success',$user->first_name . ' عزیز، خوش آمدید');
     }
 
     public function resendOtp (Request $request)
