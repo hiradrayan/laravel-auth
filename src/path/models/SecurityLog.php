@@ -22,7 +22,7 @@ class SecurityLog extends Model
 
     protected $casts = [
         'parameters' => 'array',
-        'creared_at' => 'datetime'
+        'created_at' => 'datetime'
     ];
 
     public function user () {
